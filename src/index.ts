@@ -1,9 +1,22 @@
 export * from './components';
+export * from './hooks';
 
 export type {
-  Suggestion, Part, MentionSuggestionsProps, PartType,
+  Suggestion,
+  Part,
+  SuggestionsProvidedProps,
+  Config,
+  TriggersConfig,
+  PatternsConfig,
+  Triggers,
 } from './types';
 
 export {
-  mentionRegEx, isMentionPartType, getMentionValue, parseValue, replaceMentionValues,
+  isTriggerConfig,
+  generateValueFromMentionStateAndChangedText,
+  getTriggerValue,
+  parseValue,
+  replaceTriggerValues,
 } from './utils';
+
+export { triggerRegEx, singleGroupTriggerRegEx } from './utils';

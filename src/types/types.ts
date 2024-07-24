@@ -1,13 +1,12 @@
 import type { Change } from 'diff';
-import type { ReactNode, Ref } from 'react';
-import type { StyleProp, TextInput, TextInputProps, TextStyle, ViewStyle } from 'react-native';
+import type { StyleProp, TextStyle } from 'react-native';
 
 type Suggestion = {
   id: string;
   name: string;
 };
 
-type MentionData = {
+type TriggerData = {
   original: string;
   trigger: string;
   name: string;
@@ -35,8 +34,8 @@ type RegexMatchResult = string[] & {
   // Start position of matched text in whole string
   index: number;
 
-  // Group names (duplicates MentionData type)
-  groups: MentionData;
+  // Group names (duplicates TriggerData type)
+  groups: TriggerData;
 };
 
 // The same as text selection state
@@ -45,73 +44,107 @@ type Position = {
   end: number;
 };
 
-type MentionSuggestionsProps = {
-  keyword: string | undefined;
-  onSuggestionPress: (suggestion: Suggestion) => void;
+/**
+ * Props that we can provide to the suggestions components
+ */
+type SuggestionsProvidedProps = {
+  // current keyword for the trigger
+  keyword?: string;
+  // callback for selecting a suggestion
+  onSelect: (suggestion: Suggestion) => void;
 };
 
-type MentionPartType = {
-  // single trigger character eg '@' or '#'
+type TriggerConfigBase = {
+  // Should be resolved in custom regex feature
+  // Trigger characters eg '@', '@@' or '#'
   trigger: string;
 
-  // Function for render suggestions
-  renderSuggestions?: (props: MentionSuggestionsProps) => ReactNode;
-
-  // How much spaces are allowed for mention keyword
+  // How many spaces are allowed for mention keyword
   allowedSpacesCount?: number;
 
   // Should we add a space after selected mentions if the mention is at the end of row
   isInsertSpaceAfterMention?: boolean;
 
-  // Should we render either at the top or bottom of the input
-  isBottomMentionSuggestionsRender?: boolean;
-
   // Custom mention styles in text input
-  textStyle?: StyleProp<TextStyle>;
+  textStyle?: StyleProp<TextStyle> | ((data?: TriggerData) => StyleProp<TextStyle>);
 
   // Plain string generator for mention
-  getPlainString?: (mention: MentionData) => string;
+  getPlainString?: (mention: TriggerData) => string;
 };
 
-type PatternPartType = {
+type DefaultTriggerConfig = TriggerConfigBase;
+
+type CustomTriggerConfig = TriggerConfigBase & {
+  pattern: RegExp;
+
+  getTriggerData: (regexMatch: string) => TriggerData;
+
+  getTriggerValue: (suggestion: Suggestion) => string;
+};
+
+type TriggerConfig = DefaultTriggerConfig | CustomTriggerConfig;
+
+type PatternConfig = {
   // RexExp with global flag
   pattern: RegExp;
 
-  textStyle?: StyleProp<TextStyle>;
+  textStyle?: StyleProp<TextStyle> | ((data?: TriggerData) => StyleProp<TextStyle>);
 };
 
-type PartType = MentionPartType | PatternPartType;
+type Config = TriggerConfig | PatternConfig;
+
+/**
+ * Config of trigger part types
+ */
+type TriggersConfig<TriggerName extends string> = Record<TriggerName, TriggerConfig>;
+
+/**
+ * Config of pattern part types that can highlight some matches in the `TextInput`
+ */
+type PatternsConfig = Record<string, PatternConfig>;
 
 type Part = {
   text: string;
   position: Position;
 
-  partType?: PartType;
+  config?: Config;
 
-  data?: MentionData;
+  data?: TriggerData;
 };
 
-type MentionInputProps = Omit<TextInputProps, 'onChange'> & {
+type MentionState = { plainText: string; parts: Part[] };
+
+type Triggers<TriggerName extends string> = Record<TriggerName, SuggestionsProvidedProps>;
+
+type UseMentionsConfig<TriggerName extends string> = {
   value: string;
-  onChange: (value: string) => any;
+  onChange: (value: string) => void;
 
-  partTypes?: PartType[];
+  // IMPORTANT! We need to memoize this prop externally
+  triggersConfig?: TriggersConfig<TriggerName>;
 
-  inputRef?: Ref<TextInput>;
+  // IMPORTANT! We need to memoize this prop externally
+  patternsConfig?: PatternsConfig;
 
-  containerStyle?: StyleProp<ViewStyle>;
+  onSelectionChange?: (selection: Position) => void;
 };
 
 export type {
   Suggestion,
-  MentionData,
+  TriggerData,
   CharactersDiffChange,
   RegexMatchResult,
   Position,
   Part,
-  MentionSuggestionsProps,
-  MentionPartType,
-  PatternPartType,
-  PartType,
-  MentionInputProps,
+  SuggestionsProvidedProps,
+  DefaultTriggerConfig,
+  CustomTriggerConfig,
+  TriggerConfig,
+  PatternConfig,
+  TriggersConfig,
+  PatternsConfig,
+  Config,
+  MentionState,
+  Triggers,
+  UseMentionsConfig,
 };

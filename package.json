@@ -1,6 +1,6 @@
 {
-  "name": "react-native-controlled-mentions",
-  "version": "2.2.5",
+  "name": "react-native-more-controlled-mentions",
+  "version": "3.0.0",
   "description": "Fully controlled React Native mentions component",
   "keywords": [
     "react",
@@ -10,8 +10,8 @@
     "text-input"
   ],
   "scripts": {
-    "prepare": "tsc",
-    "build": "tsc",
+    "prepare": "tsc && tsc-alias",
+    "build": "tsc && tsc-alias",
     "test": "jest",
     "changelog": "github_changelog_generator -u dabakovich -p react-native-controlled-mentions"
   },
@@ -22,25 +22,36 @@
   "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dabakovich/react-native-controlled-mentions.git"
+    "url": "git+https://github.com/juandjara/react-native-controlled-mentions.git"
   },
   "author": "David Tabaka <dabakovich@gmail.com>",
+  "contributors": [
+    "Juan D. Jara <juandjara.com>"
+  ],
   "license": "MIT",
   "devDependencies": {
-    "@types/diff": "^4.0.2",
-    "@types/jest": "^26.0.19",
-    "@types/react-native": "0.63.2",
+    "@types/diff": "4.0.2",
+    "@types/jest": "26.0.19",
+    "@types/react-native": "0.66.18",
+    "@typescript-eslint/eslint-plugin": "5.19.0",
+    "@typescript-eslint/parser": "5.19.0",
+    "eslint": "8.13.0",
+    "eslint-plugin-react-hooks": "4.4.0",
     "jest": "26.6.3",
-    "ts-jest": "^26.4.4",
-    "typescript": "4.0.5"
+    "prettier": "2.6.2",
+    "prettier-eslint": "13.0.0",
+    "ts-jest": "26.4.4",
+    "tsc-alias": "1.6.6",
+    "typescript": "4.6.3"
   },
   "peerDependencies": {
-    "react": ">=16.0",
-    "react-native": ">=0.57"
+    "react-native": ">=0.59"
+  },
+  "resolutions": {
+    "@types/react": "17.0.44"
   },
   "dependencies": {
-    "diff": "5.0.0",
-    "string.prototype.matchall": "4.0.3"
+    "diff": "5.0.0"
   },
   "jest": {
     "preset": "ts-jest",
