@@ -1,4 +1,4 @@
-## react-native-controlled-mentions [![npm version][npm-image]][npm-url]
+## react-native-more-controlled-mentions [![npm version][npm-image]][npm-url]
 
 Add to your `TextInput` ability to highlight mentions, hashtags or other custom patterns. It can:
 
@@ -30,10 +30,10 @@ Try it on Expo Snack: https://snack.expo.io/@dabakovich/mentionsapp
 
 ```
 // with npm
-npm install --save react-native-controlled-mentions
+npm install --save react-native-more-controlled-mentions
 
 // with yarn
-yarn add react-native-controlled-mentions
+yarn add react-native-more-controlled-mentions
 ```
 
 ## Getting Started
@@ -56,7 +56,7 @@ const Mentions = () => {
 ```
 
 Now you need few simple steps:
-- Add hook [`useMentions`](#hook-usementions) from the `react-native-controlled-mentions`
+- Add hook [`useMentions`](#hook-usementions) from the `react-native-more-controlled-mentions`
 - Move `textValue` and `setTextValue` from `TextInput` to the just added hook as you see below 
 - Use returned [`textInputProps`](#textinputprops) as new props for the `TextInput` component now
 
@@ -65,7 +65,7 @@ Now you need few simple steps:
 
 ```tsx
 import { TextInput } from 'react-native';
-import { useMentions } from 'react-native-controlled-mentions'
+import { useMentions } from 'react-native-more-controlled-mentions'
 
 const Mentions = () => {
   const [textValue, setTextValue] = useState('');
@@ -92,7 +92,7 @@ Add the [`triggersConfig`](#triggersconfig-triggersconfigtriggername) property w
 
 ```typescript jsx
 import { TextInput } from 'react-native';
-import { useMentions, TriggersConfig } from 'react-native-controlled-mentions'
+import { useMentions, TriggersConfig } from 'react-native-more-controlled-mentions'
 
 // Create config as static object out of function component
 // Or memoize it inside FC using `useMemo`
@@ -183,7 +183,7 @@ export { Suggestions }
 
 ```typescript jsx
 import { TextInput } from 'react-native';
-import { useMentions, TriggersConfig } from 'react-native-controlled-mentions'
+import { useMentions, TriggersConfig } from 'react-native-more-controlled-mentions'
 import { Suggestions } from './suggestions';
 
 const triggersConfig: TriggersConfig<'mention'> = {
@@ -388,14 +388,14 @@ You can import RegEx that is using in the component and then extract all your me
 from `MentionInput`'s value using your own logic.
 
 ```ts
-import { mentionRegEx } from 'react-native-controlled-mentions';
+import { mentionRegEx } from 'react-native-more-controlled-mentions';
 ```
 
 Or you can use `replaceTriggerValues` helper to replace all mentions from `MentionInput`'s input using
 your replacer function that receives [TriggerData](#type-triggerdata) type and returns string.
 
 ```ts
-import { replaceTriggerValues } from 'react-native-controlled-mentions';
+import { replaceTriggerValues } from 'react-native-more-controlled-mentions';
 
 const value = 'Hello {@}[David Tabaka](5)! How are you?';
 
@@ -416,7 +416,7 @@ import {
   Config,
   parseValue,
   isTriggerConfig,
-} from 'react-native-controlled-mentions';
+} from 'react-native-more-controlled-mentions';
 
 /**
  * Part renderer
@@ -489,6 +489,6 @@ const renderValue: FC = (
 
 <a href="https://www.buymeacoffee.com/dabakovich" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
-[npm-image]: https://img.shields.io/npm/v/react-native-controlled-mentions
+[npm-image]: https://img.shields.io/npm/v/react-native-more-controlled-mentions
 
-[npm-url]: https://npmjs.org/package/react-native-controlled-mentions
+[npm-url]: https://npmjs.org/package/react-native-more-controlled-mentions
