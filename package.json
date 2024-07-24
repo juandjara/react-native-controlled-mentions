@@ -24,7 +24,10 @@
     "type": "git",
     "url": "git+https://github.com/juandjara/react-native-controlled-mentions.git"
   },
-  "author": "David Tabaka <dabakovich@gmail.com>, Juan D. Jara <juandjara.com>",
+  "author": "David Tabaka <dabakovich@gmail.com>",
+  "contributors": [
+    "Juan D. Jara <juandjara.com>"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@types/diff": "4.0.2",
